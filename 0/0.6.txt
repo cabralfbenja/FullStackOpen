@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant browser
+    participant server
+    participant api_server
+    participant database
+
+    Note right of browser: User writes something in the text field
+
+    browser->>api_server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate api_server
+    api_server->>database: INSERT new note data
+    activate database
+    database-->>api_server: Confirmation
+    deactivate database
+    api_server-->>browser: Response status (success)
+    deactivate api_server
+
+    Note right of browser: The SPA updates the notes list with the newly created note

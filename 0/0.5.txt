@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant browser
+    participant server
+    participant api_server
+    participant database
+
+    Note right of browser: User goes to https://studies.cs.helsinki.fi/exampleapp/spa
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: SPA HTML, main.js, main.css
+    deactivate server
+
+    Note right of browser: The browser starts executing main.js
+
+    browser->>api_server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate api_server
+    api_server->>database: Query data
+    activate database
+    database-->>api_server: Retrieved data
+    deactivate database
+    api_server-->>browser: JSON data
+    deactivate api_server
+
+    Note right of browser: The SPA renders the notes using the data retrieved from the server
